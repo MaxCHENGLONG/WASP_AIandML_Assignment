@@ -1,0 +1,132 @@
+\documentclass{article}
+
+% Language setting
+% Replace `english' with e.g. `spanish' to change the document language
+\usepackage[english]{babel}
+
+% Set page size and margins
+% Replace `letterpaper' with `a4paper' for UK/EU standard size
+\usepackage[letterpaper,top=2cm,bottom=2cm,left=3cm,right=3cm,marginparwidth=1.75cm]{geometry}
+\usepackage[natbib=true, backend=biber, style=authoryear]{biblatex}
+\addbibresource{references.bib}
+
+\input{macros}
+
+
+\title{Assignment\\Neurosymbolic AI -- Semantic Loss\\Solution}
+\author{Your Name(s)}
+\date{}
+
+
+
+
+
+\usepackage{minted}
+
+
+\begin{document}
+\maketitle
+
+
+
+
+\section*{Submission Intructions}
+\begin{itemize}
+	\item For solving this problem you are allowed to work in pairs.
+	\item In order to submit your solution use this LaTex template.
+	\item Clearly indicate your name(s).
+	\item If your work in pairs. Both of you should upload a version to Canvas and each
+	\item The uploaded solution has to contain both of your names.
+\end{itemize}
+
+
+
+\section{Training a Neural Classifier}
+
+
+
+\section{Replacing Softmax with Sigmoids}
+
+
+
+
+\section{Encouraging Logical Constraints with the Semantic Loss}
+
+\subsection*{Q3.1}
+
+\begin{minted}{python3}
+def exactly_one(n):
+	# n is the number of Boolean variables
+	...
+
+
+\end{minted}
+
+
+\subsection*{Q3.2}
+
+
+\subsection*{Q3.3}
+
+\begin{minted}{python3}
+class LogProbSemiring:
+
+	@staticmethod
+	def one():
+		raise NotImplementedError()
+
+	@staticmethod
+	def zero():
+		raise NotImplementedError()
+
+	@staticmethod
+	def plus(a, b):
+		raise NotImplementedError()
+
+	@staticmethod
+	def times(a, b):
+		raise NotImplementedError()
+
+	@staticmethod
+	def value(a):
+		raise NotImplementedError()
+
+	@staticmethod
+	def negate(a):
+		raise NotImplementedError()
+	\end{minted}
+
+
+\subsection*{Q3.4}
+
+
+
+
+
+
+
+
+\section{Open-Ended Question}
+
+\begin{description}
+	\item[Q4] Come up with your own neurosymbolic problem where you would like to encourage a symbolic constraint on the outputs of a neural network.
+\end{description}
+
+Hint: Do not make it too complicated! Our naive implementation does not scale that well. For thos more sophisticated techniques are needed \citep{maene2025klay} but that is a topic for another day.
+
+
+\section{Neurosymbolic AI and Physics Informed Neural Networks}
+
+\begin{description}
+	\item[Q5] Read up on \textit{physics informed neural networks} \citep{raissi2019physics} and compare them to the semantic loss. What are differences? What are commonalities?
+	      \\
+	      \href{https://www.youtube.com/watch?v=-zrY7P2dVC4}{https://www.youtube.com/watch?v=-zrY7P2dVC4}
+\end{description}
+
+
+
+
+
+
+\printbibliography
+\end{document}
