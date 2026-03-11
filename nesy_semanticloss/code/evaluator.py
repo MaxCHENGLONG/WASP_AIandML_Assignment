@@ -1,21 +1,48 @@
 import torch
 
 EPSILON = 10e-12
+CUTOFF = -0.6931471805599453  # log(0.5)
 
 
-# def log1mexp(x):
-#     """
-#     Numerically accurate evaluation of log(1 - exp(x)) for x < 0.
-#     See [Maechler2012accurate]_ for details.
-#     https://github.com/pytorch/pytorch/issues/39242
-#     """
-#     mask = CUTOFF < x  # x < 0
-#     return torch.where(
-#         mask,
-#         (-x.expm1() + EPSILON).log(),
-#         (-x.exp() + EPSILON).log1p(),
-#     )
+def log1mexp(x):
+    """
+    Numerically accurate evaluation of log(1 - exp(x)) for x < 0.
+    See [Maechler2012accurate]_ for details.
+    https://github.com/pytorch/pytorch/issues/39242
+    """
+    mask = CUTOFF < x  # x < 0
+    return torch.where(
+        mask,
+        (-x.expm1() + EPSILON).log(),
+        (-x.exp() + EPSILON).log1p(),
+    )
 
+class LogProbSemiring:
+
+    @staticmethod
+    def one():
+        return 0.0 # log(1.0) = 0.0
+
+    @staticmethod
+    def zero():
+        return -torch.inf # log(0.0) = -inf
+
+    @staticmethod
+    def plus(a, b):
+        return torch.logaddexp(torch.as_tensor(a), torch.as_tensor(b))
+
+    @staticmethod
+    def times(a, b):
+        return a + b
+
+    @staticmethod
+    def value(a):
+        return torch.log(a + EPSILON)
+
+    @staticmethod
+    def negate(a):
+        return log1mexp(torch.log(a + EPSILON))
+    
 
 class ProbSemiring:
 
@@ -42,34 +69,6 @@ class ProbSemiring:
     @staticmethod
     def negate(a):
         return 1.0 - a
-
-
-class LogProbSemiring:
-
-    @staticmethod
-    def one():
-        raise NotImplementedError()
-
-    @staticmethod
-    def zero():
-        raise NotImplementedError()
-
-    @staticmethod
-    def plus(a, b):
-        raise NotImplementedError()
-
-    @staticmethod
-    def times(a, b):
-        raise NotImplementedError()
-
-    @staticmethod
-    def value(a):
-        raise NotImplementedError()
-
-    @staticmethod
-    def negate(a):
-        raise NotImplementedError()
-
 
 def evaluate_formula(formula, probs, semiring):
     assert formula, manager.var_count() == probs.shape[-1]

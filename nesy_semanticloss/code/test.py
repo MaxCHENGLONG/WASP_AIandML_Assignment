@@ -28,13 +28,14 @@ def test(outdir):
     values = torch.rand(formula.manager.var_count())
     prob_semiring = ProbSemiring()
     prob_result = evaluate_formula(formula, values, prob_semiring)
-    print(prob_result)
+    print(f"Prob result: {prob_result}")
 
     logprob_semiring = LogProbSemiring()
-    # logprob_result = evaluate_formula(formula, values, logprob_semiring)
-    # print(logprob_result)
+    logprob_result = evaluate_formula(formula, values, logprob_semiring)
+    print(f"LogProb result from ProbSemiring: {torch.log(prob_result + EPSILON)}")
+    print(f"LogProb result: {logprob_result}")
 
-    # print(torch.isclose(torch.log(prob_result + EPSILON), logprob_result))
+    print(torch.isclose(torch.log(prob_result + EPSILON), logprob_result))
 
 
 if __name__ == "__main__":

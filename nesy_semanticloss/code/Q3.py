@@ -24,6 +24,8 @@ def build_exactly_one_constraint(n_vars = 10): # MNIST
     print("Exactly-One SDD model count:", exactly_one.model_count())
     return manager, exactly_one
 
-manager, constraint = build_exactly_one_constraint(n_vars=10)
+manager, constraint_formula = build_exactly_one_constraint(n_vars=10)
+
+
 
 
